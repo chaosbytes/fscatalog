@@ -1,0 +1,118 @@
+body, div{
+	background-color: #373737;
+}
+
+@font-face{
+	font-family: 'minecraftia';
+	src: url('../fonts/Minecraftia.ttf');
+}
+* {
+	font-family: minecraftia;
+	font-size: small;
+}
+
+::-webkit-input-placeholder {
+  font-size: xx-small;
+  text-align: center;
+}
+
+::-moz-placeholder {
+  font-size: xx-small;
+  text-align: center;
+}
+
+::-o-placeholder {
+  font-size: xx-small;
+  text-align: center;
+}
+
+::-ms-placeholder {
+  font-size: xx-small;
+  text-align: center;
+}
+
+-placeholder {
+  font-size: xx-small;
+  text-align: center;
+}
+
+#sign-in-button .ui-btn-text {
+	margin-right: 18px;
+}
+#sign-up-button .ui-btn-text {
+	margin-left: 18px;
+}
+
+
+.ui-grid-a .ui-block-a {
+	width: 125px;
+	height: 125px;
+	position: relative;
+	background-color: #373737;
+	margin-left: auto;
+	border: 1px white;
+}
+
+.ui-grid-a .ui-block-b {
+	width: 125px;
+	height: 125px;
+	position: relative;
+	background-color: #373737;
+	margin-right: auto;
+	border: 1px white;
+}
+
+#sign-in-panel-close-btn{
+	margin-left: 185px;
+}
+
+#fs-header.ui-title {
+	font-size: 14px;
+}
+
+#fs-footer-dev.ui-title {
+	font-size: small;
+}
+
+#fs-footer-copyright.ui-title {
+	font-size: xx-small;
+}
+
+#icons-wrapper {
+	width: 250px;
+	height: 250px;
+	margin: auto;
+}
+
+#splash-movie-icon {
+	width: 100px;
+	height: 100px;
+	margin: auto;
+	position: relative;
+}
+
+#splash-music-icon {
+	width: 100px;
+	height: 100px;
+	margin: auto;
+	position: relative;
+}
+
+#splash-book-icon {
+	width: 100px;
+	height: 100px;
+	margin: auto;
+	position: relative;
+}
+
+#splash-game-icon {
+	width: 100px;
+	height: 100px;
+	margin: auto;
+	position: relative;
+}
+
+#welcome-message {
+	color: white;
+	text-align: center;
+}
