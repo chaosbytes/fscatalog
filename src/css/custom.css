@@ -9,6 +9,7 @@ body, div{
 * {
 	font-family: minecraftia;
 	font-size: small;
+	color: #18AAD6;
 }
 
 ::-webkit-input-placeholder {
@@ -36,83 +37,113 @@ body, div{
   text-align: center;
 }
 
-#sign-in-button .ui-btn-text {
-	margin-right: 18px;
-}
-#sign-up-button .ui-btn-text {
-	margin-left: 18px;
-}
 
-
-.ui-grid-a .ui-block-a {
+.ui-grid-a .icon-tile.ui-block-a {
 	width: 125px;
 	height: 125px;
 	position: relative;
 	background-color: #373737;
-	margin-left: auto;
-	border: 1px white;
+	margin: auto;
 }
 
-.ui-grid-a .ui-block-b {
+.ui-grid-a .icon-tile.ui-block-b {
 	width: 125px;
 	height: 125px;
 	position: relative;
 	background-color: #373737;
-	margin-right: auto;
-	border: 1px white;
-}
-
-#sign-in-panel-close-btn{
-	margin-left: 185px;
+	margin: auto;
 }
 
 #fs-header.ui-title {
 	font-size: 14px;
 }
 
-#fs-footer-dev.ui-title {
-	font-size: small;
-}
-
-#fs-footer-copyright.ui-title {
-	font-size: xx-small;
-}
-
-#icons-wrapper {
+#icons-wrapper {	
 	width: 250px;
 	height: 250px;
 	margin: auto;
 }
 
-#splash-movie-icon {
+#movie-icon-tile {
 	width: 100px;
 	height: 100px;
-	margin: auto;
+	margin: 12.5px 0px 0px 12.5px;
 	position: relative;
 }
 
-#splash-music-icon {
+#music-icon-tile {
 	width: 100px;
 	height: 100px;
-	margin: auto;
+	margin: 12.5px 0px 0px 12.5px;
 	position: relative;
 }
 
-#splash-book-icon {
+#book-icon-tile {
 	width: 100px;
 	height: 100px;
-	margin: auto;
+	margin: 12.5px 0px 0px 12.5px;
 	position: relative;
 }
 
-#splash-game-icon {
+#game-icon-tile {
 	width: 100px;
 	height: 100px;
-	margin: auto;
+	margin: 12.5px 0px 0px 12.5px;
 	position: relative;
 }
 
 #welcome-message {
 	color: white;
 	text-align: center;
+	font-size: small;
+	display: block;
+  width:100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+#login-message {
+	color: white;
+	text-align: center;
+	font-size: 10px;
+	display:block;
+  width:100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+#navbar {
+	width: 100%;
+	height: 40px;
+	position: relative;
+	margin: auto;
+}
+
+h3#fs-footer-dev {
+	color: white;
+	text-align: center;
+	font-size: 10px;
+	display:block;
+  width:100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+h5#fs-footer-copyright {
+	color: white;
+	text-align: center;
+	font-size: 6px;
+	display:block;
+  width:100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+#navbar-popup-menu-popup {
+	margin-bottom: 50px;
+}
+
+#navbar-popup-menu {
+	width: 100%;
+	height: 100%;
 }

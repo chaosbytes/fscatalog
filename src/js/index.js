@@ -1,39 +1,49 @@
 $(document).on("pageinit", function() {
-	$("#sign-in-submit").click(function() {
-		$.post("./php/signin.php", {
-			username: $("#sign-in-username-field").val(),
-			password: $("#sign-in-password-field").val()
-		}, function(data) {
-			alert(data);
+	$("#login-submit").click(function() {
+		$.ajax({
+			url: "./php/login.php",
+			method: "POST",
+			data: {
+				login: true,
+				user_name: $("#login-username-field").val(),
+				user_password: $("#login-password-field").val()
+			},
+			success: function(data) {
+				console.log(data);
+			}
 		});
 	});
-	$("#sign-up-submit").click(function() {
-		$.post("./php/signup.php", {
-			username: $("#sign-up-username-field").val(),
-			password: $("#sign-up-password-field").val(),
-			passwordConfirm: $("#sign-up-password-confirm-field").val()
-		}, function(data) {
-			alert(data);
+	$("#register-submit").click(function() {
+		$.ajax({
+			url: "./php/register.php",
+			method: "POST",
+			data: {
+				register: true,
+				user_name: $("#register-input-username").val(),
+				user_email: $("#register-input-email").val(),
+				user_password_new: $("#register-input-password").val(),
+				user_password_repeat: $("#register-input-password-confirm").val()
+			},
+			success: function(data) {
+				console.log(data);
+			}
 		});
 	});
-	$("#sign-in-panel").on("panelclose", function(event, ui) {
-		$("#sign-in-panel").removeClass("panel-open");
-	});
-	$("#sign-up-panel").on("panelclose", function(event, ui) {
-		$("#sign-up-panel").removeClass("panel-open");
-	});
-
-	$("#page").on("swiperight", function(event) {
-		if (!$("#sign-up-panel").hasClass("panel-open")) {
-			$("#sign-in-panel").panel("open");
-			$("#sign-in-panel").addClass("panel-open");
-
+	$('#page').on("swipeleft swiperight", function(e) {
+		if ($.mobile.activePage.jqmData("panel") !== "open") {
+			if (e.type === "swipeleft") {
+				$("#register-panel").panel("open");
+			} else if (e.type === "swiperight") {
+				$("#login-panel").panel("open");
+			}
 		}
 	});
-	$("#page").on("swipeleft", function(event) {
-		if (!$("#sign-in-panel").hasClass("panel-open")) {
-			$("#sign-up-panel").panel("open");
-			$("#sign-up-panel").addClass("panel-open");
+
+	$('#movie-icon-tile').click(function() {
+		var userLoggedIn = checkUserLoggedIn();
+		console.log(userLoggedIn);
+		if (userLoggedIn.status) {
+			window.location = "./html/movies.html";
 		}
 	});
 });
