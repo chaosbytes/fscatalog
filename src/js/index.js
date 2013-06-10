@@ -60,8 +60,6 @@ $(document).on("pageinit", function() {
 			$.post("./content/logged-in-panels.php", function(data) {
 				$('#page').prepend(data);
 				setTimeout(function() {
-					$('#left-panel').trigger("create");
-					$('#right-panel').trigger("create");
 					$('#page').trigger("create");
 				}, 500);
 
@@ -70,8 +68,6 @@ $(document).on("pageinit", function() {
 			$.post("./content/logged-out-panels.php", function(data) {
 				$('#page').prepend(data);
 				setTimeout(function() {
-					$('#left-panel').trigger("create");
-					$('#right-panel').trigger("create");
 					$('#page').trigger("create");
 				}, 500);
 			});
