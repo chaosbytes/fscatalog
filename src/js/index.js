@@ -1,24 +1,48 @@
-$(document).on("pageinit", function() {
-	loadPanels();
+userData = null;
+$(document).ready(function() {
 
-	$("#login-submit").click(function() {
+
+	function checkUserLoggedIn() {
+		var check = 0;
 		$.ajax({
-			url: "./php/login.php",
+			method: "POST",
+			async: false,
+			data: {
+				action: "checkUserLoggedIn"
+			},
+			url: "./php/php-login/login.php",
+			success: function(data) {
+				check = data;
+			}
+		});
+		return check;
+	}
+
+	$("#login-btn").click(function() {
+		$.ajax({
+			url: "../php/php-login/login.php",
 			method: "POST",
 			data: {
+				action: "login",
 				login: true,
 				user_name: $("#login-username-field").val(),
 				user_password: $("#login-password-field").val()
 			},
-			success: function() {
-				$('#left-panel').panel("close");
-				loadPanels();
+			success: function(data) {
+				if (data == 1) {
+					$('#left-panel').panel("close");
+					$.post("../php/getuserdata.php", function(data) {
+						userData = data;
+					});
+					$.mobile.changePage("#memberspage", true);
+				}
 			}
 		});
 	});
-	$("#register-submit").click(function() {
+
+	$("#register-btn").click(function() {
 		$.ajax({
-			url: "./php/register.php",
+			url: "../php/php-login/register.php",
 			method: "POST",
 			data: {
 				register: true,
@@ -32,45 +56,47 @@ $(document).on("pageinit", function() {
 			}
 		});
 	});
-	$('#page').on("swipeleft swiperight", function(e) {
-		if ($.mobile.activePage.jqmData("panel") !== "open") {
-			if (e.type === "swipeleft") {
-				$("#right-panel").panel("open");
-			} else if (e.type === "swiperight") {
-				$("#left-panel").panel("open");
-			}
-		}
-	});
 
-	function checkUserLoggedIn() {
+	$("#logout-btn").click(function() {
 		$.ajax({
+			url: "../php/php-login/login.php",
 			method: "POST",
 			data: {
-				action: "checkUserLoggedIn"
+				action: "logout",
+				logout: true
 			},
-			url: "./php/login.php",
 			success: function(data) {
-				return data;
+				$('#navbar-popup-menu').popup('close');
+				$.mobile.changePage("#homepage", true);
 			}
 		});
-	}
+	});
 
-	function loadPanels() {
-		if (checkUserLoggedIn()) {
-			$.post("./content/logged-in-panels.php", function(data) {
-				$('#page').prepend(data);
-				setTimeout(function() {
-					$('#page').trigger("create");
-				}, 500);
+	$("#homepage").on("pageinit", function() {
+		$("#homepage").on("swipeleft swiperight", function(e) {
+			if ($.mobile.activePage.jqmData("panel") !== "open") {
+				if (e.type === "swipeleft") {
+					$("#right-panel").panel("open");
+				} else if (e.type === "swiperight") {
+					$("#left-panel").panel("open");
+				}
+			}
+		});
+	});
 
-			});
-		} else {
-			$.post("./content/logged-out-panels.php", function(data) {
-				$('#page').prepend(data);
-				setTimeout(function() {
-					$('#page').trigger("create");
-				}, 500);
-			});
-		}
-	}
+	$("#memberspage").on("pageinit", function() {
+		$.post("../php/getuserdata.php", function(data) {
+			userData = data;
+		});
+		$("#memberspage").on("swipeleft swiperight", function(e) {
+			if ($.mobile.activePage.jqmData("panel") !== "open") {
+				if (e.type === "swipeleft") {
+					$("#right-panel2").panel("open");
+				} else if (e.type === "swiperight") {
+					$("#left-panel2").panel("open");
+				}
+			}
+		});
+	});
+
 });

@@ -34,28 +34,24 @@ require_once "classes/Login.php";
 // so this single line handles the entire login process.
 $login = new Login($_POST);
 
-if(isset($_POST['action'])){
-	switch($_POST['action']){
-		case 'checkUserLoggedIn':
-			echo checkUserLoggedIn();
-			break;
-	}
-}
-if ($login->errors) {
-	foreach ($login->errors as $error) {
-		echo $error;
-	}
-}
-
-// show positive messages
-if ($login->messages) {
-	foreach ($login->messages as $message) {
-		echo $message;
-	}
+if (isset($_POST['action'])) {
+	if ($_POST['action'] === 'checkUserLoggedIn') {
+		$data = checkUserLoggedIn($login);
+		echo $data;
+		die;
+	} else if ($_POST['action'] === 'login') {
+			$data = checkUserLoggedIn($login);
+			echo $data;
+			die;
+		} else if ($_POST['action'] === 'logout') {
+			$data = checkUserLoggedIn($login);
+			echo $data;
+			die;
+		}
 }
 
-function checkUserLoggedIn() {
-	if ($login->isUserLoggedIn() == true) {
+function checkUserLoggedIn($loginObj) {
+	if (isset($_SESSION['user_name'])) {
 		return true;
 	} else {
 		return false;

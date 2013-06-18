@@ -10,6 +10,7 @@ body, div{
 	font-family: minecraftia;
 	font-size: small;
 	color: #18AAD6;
+	text-align: center;
 }
 
 ::-webkit-input-placeholder {
@@ -146,4 +147,52 @@ h5#fs-footer-copyright {
 #navbar-popup-menu {
 	width: 100%;
 	height: 100%;
+}
+
+#left-panel-content {
+	margin-top: 40px;
+}
+
+#login-btn{
+	width: 126px;
+}
+
+#left-panel-header.ui-header {
+	height: 44px;
+}
+
+#left-panel-header-text.ui-title {
+	font-size: x-small;
+	width: 100px;
+	height: 20px;
+	margin: auto;
+	margin-top: 10px;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+a#movie-btn span.ui-btn-text{
+	font-size: 10px;
+}
+
+a#music-btn span.ui-btn-text{
+	font-size: 10px;
+}
+
+a#book-btn span.ui-btn-text{
+	font-size: 10px;
+}
+
+a#game-btn span.ui-btn-text{
+	font-size: 10px;
+}
+#right-panel-header.ui-header {
+	height: 44px;
+}
+#right-panel-header-text.ui-title {
+	font-size: x-small;
+	width: 100px;
+	height: 20px;
+	margin: auto;
+	margin-top: 10px;
+	background-color: rgba(0, 0, 0, 0);
 }
