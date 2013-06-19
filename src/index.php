@@ -1,9 +1,7 @@
 <?php
-require_once("./php/functions.php");
 session_name('fscatalog');
 session_start();
 ?>
-
 <!DOCTYPE html>
 
 <html>
@@ -14,11 +12,13 @@ session_start();
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <title>FS-Catalog</title>
-    <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="./css/index.css" type="text/css">
+    <link rel="stylesheet" href="./css/custom.css" type="text/css">
     <script src="./js/jquery-1.10.1.min.js" type="text/javascript">
 </script>
     <script src="./js/index.js" type="text/javascript">
+</script>
+		<script src="./js/functions.js" type="text/javascript">
 </script>
     <script src="./js/jquery.mobile-1.3.1.min.js" type="text/javascript">
 </script>
@@ -32,8 +32,7 @@ session_start();
 
         <div data-role="panel" id="left-panel" data-theme="j" data-display="overlay" data-dismissible="false" data-position-fixed="true">
             <div id="left-panel-header" data-theme="j" data-role="header" data-position="fixed">
-                <h3 id="left-panel-header-text">Login</h3>
-                <a id="left-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
+                <h3 id="left-panel-header-text">Login</h3><a id="left-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
             </div>
 
             <div data-role="content" id="left-panel-content" class="ui-content" role="main">
@@ -55,8 +54,7 @@ session_start();
 
         <div data-role="panel" id="right-panel" data-theme="j" data-display="overlay" data-position="right" data-dismissible="false" data-position-fixed="true">
             <div id="right-panel-header" data-theme="j" data-role="header" data-position="fixed">
-                <h3 id="right-panel-header-text">Register</h3>
-                <a id="right-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-left"></a>
+                <h3 id="right-panel-header-text">Register</h3><a id="right-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-left"></a>
             </div>
 
             <div data-role="content" id="right-panel-content" class="ui-content" role="main">
@@ -87,8 +85,7 @@ session_start();
         <div data-theme="j" data-role="header" data-position="fixed">
             <a id="left-btn" data-role="button" data-theme="j" href="#left-panel" data-icon="home" data-iconpos="notext" class="ui-btn-left"></a>
 
-            <h4 id="fs-header">FS-Catalog™</h4>
-            <a id="right-btn" data-role="button" data-theme="j" href="#right-panel" data-icon="plus" data-iconpos="notext" class="ui-btn-right"></a>
+            <h4 id="fs-header">FS-Catalog™</h4><a id="right-btn" data-role="button" data-theme="j" href="#right-panel" data-icon="plus" data-iconpos="notext" class="ui-btn-right"></a>
         </div><!-- content -->
 
         <div data-role="content">
@@ -115,13 +112,9 @@ session_start();
         <div data-theme="j" data-role="footer" data-position="fixed">
             <div id="navbar" data-role="navbar" data-iconpos="bottom">
                 <ul>
-                    <li id="navbar-menu-button">
-                        <a href="#navbar-popup-menu" data-transition="slideup" data-position-to="origin" data-rel="popup" data-theme="j" data-icon="bars" data-overlay-theme="j" data-dismissible="false"></a>
-                    </li>
+                    <li id="navbar-menu-button"><a href="#navbar-popup-menu" data-transition="slideup" data-position-to="origin" data-rel="popup" data-theme="j" data-icon="bars" data-overlay-theme="j" data-dismissible="false"></a></li>
 
-                    <li id="navbar-info-button">
-                        <a href="#navbar-popup-info" data-transition="slide" data-position-to="window" data-rel="popup" data-theme="j" data-icon="info"></a>
-                    </li>
+                    <li id="navbar-info-button"><a href="#navbar-popup-info" data-transition="slide" data-position-to="window" data-rel="popup" data-theme="j" data-icon="info"></a></li>
                 </ul>
             </div>
 
@@ -133,29 +126,30 @@ session_start();
 
             <h5 id="fs-footer-copyright">© Joe Rice</h5>
         </div>
-    </div>
-    
-    <!-- members page -->
+    </div><!-- members page -->
+
     <div data-role="page" id="memberspage">
         <!-- Panels -->
-				
+
         <div data-role="panel" id="left-panel2" data-theme="j" data-display="overlay" data-dismissible="false" data-position-fixed="true">
-            <div id="left-panel-header" data-theme="j" data-role="header" data-position="fixed" >
-                <div id="left-panel-header-text" class="ui-title"><?php echo($_SESSION['user_name']); ?></div><a id="left-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
+            <div id="left-panel-header" data-theme="j" data-role="header" data-position="fixed">
+                <div id="left-panel-header-text" class="ui-title"><script>document.write(getUserData("user_name"));</script></div>
+                <a id="left-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
             </div>
 
             <div data-role="content" id="left-panel-content">
-                <a id="movie-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Movies (<?php echo getUserMovieCount($_SESSION['user_name']); ?>)</a>
-                <a id="music-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Music (<?php echo getUserMusicCount($_SESSION['user_name']); ?>)</a>
-                <a id="book-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Books (<?php echo getUserBookCount($_SESSION['user_name']); ?>)</a> 
-                <a id="game-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Games (<?php echo getUserGameCount($_SESSION['user_name']); ?>)</a>
+                <a id="movie-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Movies (<script>document.write(getUserData("movie_count"));</script>)</a> 
+                <a id="music-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Music (<script>document.write(getUserData("music_count"));</script>)</a> 
+                <a id="book-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Books (<script>document.write(getUserData("book_count"));</script>)</a> 
+                <a id="game-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Games (<script>document.write(getUserData("game_count"));</script>)</a>
             </div>
         </div>
 
         <div data-role="panel" id="right-panel2" data-theme="j" data-display="overlay" data-position="right" data-dismissible="false" data-position-fixed="true">
             <div id="right-panel-header" data-theme="j" data-role="header" data-position="fixed">
-                <div id="right-panel-header-text" class="ui-title">Quick Actions</div>
-                <a id="right-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-left"></a>
+                <div id="right-panel-header-text" class="ui-title">
+                    Quick Actions
+                </div><a id="right-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-left"></a>
             </div>
 
             <div data-role="content" id="right-panel-content" class="ui-content" role="main"></div>
@@ -163,8 +157,8 @@ session_start();
 
         <div data-theme="j" data-role="header" data-position="fixed">
             <a id="left-btn2" data-role="button" data-theme="j" href="#left-panel2" data-icon="grid" data-iconpos="notext"></a>
-            <h4 id="fs-header">FS-Catalog™</h4>
-            <a id="right-btn2" data-role="button" data-theme="j" href="#right-panel2" data-icon="star" data-iconpos="notext"></a>
+
+            <h4 id="fs-header">FS-Catalog™</h4><a id="right-btn2" data-role="button" data-theme="j" href="#right-panel2" data-icon="star" data-iconpos="notext"></a>
         </div>
 
         <div data-role="content">
@@ -183,21 +177,15 @@ session_start();
                 </div>
             </div>
 
-            <div id="intro-message">
-                
-            </div>
+            <div id="intro-message"></div>
         </div><!-- footer -->
 
         <div data-theme="j" data-role="footer" data-position="fixed">
             <div id="navbar" data-role="navbar" data-iconpos="bottom">
                 <ul>
-                    <li id="navbar-menu-button">
-                        <a href="#navbar-popup-menu" data-transition="slideup" data-position-to="origin" data-rel="popup" data-theme="j" data-icon="bars" data-overlay-theme="j" data-dismissible="false"></a>
-                    </li>
+                    <li id="navbar-menu-button"><a href="#navbar-popup-menu" data-transition="slideup" data-position-to="origin" data-rel="popup" data-theme="j" data-icon="bars" data-overlay-theme="j" data-dismissible="false"></a></li>
 
-                    <li id="navbar-info-button">
-                        <a href="#navbar-popup-info" data-transition="slide" data-position-to="window" data-rel="popup" data-theme="j" data-icon="info"></a>
-                    </li>
+                    <li id="navbar-info-button"><a href="#navbar-popup-info" data-transition="slide" data-position-to="window" data-rel="popup" data-theme="j" data-icon="info"></a></li>
                 </ul>
             </div>
 
