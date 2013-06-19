@@ -38,6 +38,9 @@ body, div{
   text-align: center;
 }
 
+div.spacer {
+	height: 25px;
+}
 
 .ui-grid-a .icon-tile.ui-block-a {
 	width: 125px;
@@ -195,4 +198,20 @@ a#game-btn span.ui-btn-text{
 	margin: auto;
 	margin-top: 10px;
 	background-color: rgba(0, 0, 0, 0);
+}
+input#title-name-field {
+	width: 160px;
+}
+
+input#title-name-field -placeholder, ::-webkit-input-placeholder{
+	padding-right: 15px;
+}
+
+
+#title-type-select {
+	width: 160px;
+}
+
+div #title-type-select-button span.ui-btn-inner span.ui-btn-text span {
+	padding-left: 15px;
 }

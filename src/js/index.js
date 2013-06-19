@@ -34,7 +34,7 @@ $(document).ready(function() {
 					$.post("../php/getuserdata.php", function(data) {
 						userData = data;
 					});
-					$.mobile.changePage("#memberspage", true);
+					$.mobile.changePage("#members-page", true);
 				}
 			}
 		});
@@ -67,13 +67,13 @@ $(document).ready(function() {
 			},
 			success: function(data) {
 				$('#navbar-popup-menu').popup('close');
-				$.mobile.changePage("#homepage", true);
+				$.mobile.changePage("#home-page", true);
 			}
 		});
 	});
 
-	$("#homepage").on("pageinit", function() {
-		$("#homepage").on("swipeleft swiperight", function(e) {
+	$("#home-page").on("pageinit", function() {
+		$("#home-page").on("swipeleft swiperight", function(e) {
 			if ($.mobile.activePage.jqmData("panel") !== "open") {
 				if (e.type === "swipeleft") {
 					$("#right-panel").panel("open");
@@ -84,11 +84,20 @@ $(document).ready(function() {
 		});
 	});
 
-	$("#memberspage").on("pageinit", function() {
+	$("#members-page").on("pageinit", function() {
 		$.post("../php/getuserdata.php", function(data) {
 			userData = data;
 		});
-		$("#memberspage").on("swipeleft swiperight", function(e) {
+		$('#add-title-btn').click(function() {
+			if ($('#title-type-select').val() === "movie") {
+				var movie = "http://mymovieapi.com/?title=" + $('#title-name-field').val() + "&type=json&plot=simple&episode=0&limit=10&yg=0&mt=none&lang=en-US&offset=&aka=simple&release=simple&business=0&tech=0";
+				console.log(movie);
+				$.get(movie, function(output) {
+					console.log(output);
+				});
+			}
+		});
+		$("#members-page").on("swipeleft swiperight", function(e) {
 			if ($.mobile.activePage.jqmData("panel") !== "open") {
 				if (e.type === "swipeleft") {
 					$("#right-panel2").panel("open");
