@@ -1,16 +1,29 @@
-function getUserData(dataRequest){
-	var userData = null;
+function getNewestTitleInfo() {
+	var info = "";
 	$.ajax({
-		type: "POST",
-		async: false,
+		url: "./php/functions.php",
 		data: {
-			'action': 'getuserdata',
-			'getdata': dataRequest
+			action: "getNewestTitleType"
 		},
-		url: "./php/getuserdata.php",
-		success: function(data) {
-			userData = data;
+		type: "POST",
+		success: function (data) {
+			console.log(data);
+			switch(data){
+			case "movie":
+				$.ajax({
+					type: "POST",
+					url: "./php/functions.php",
+					data: {
+						action: "getMovieContent",
+						fields: {title: "Title: ", director: "Director: ", year: "Year: ", actors: "Actors: ", plot: "Plot: "}
+					},
+					success: function (output) {
+						info = output;
+					}
+				});
+				break;
+			}
 		}
 	});
-	return userData;
+	return info;
 }
