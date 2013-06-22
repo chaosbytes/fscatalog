@@ -25,5 +25,5 @@ function getNewestTitleInfo() {
 			}
 		}
 	});
-	return info;
-}
+	console.log(info);
+} 

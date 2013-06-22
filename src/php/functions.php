@@ -43,12 +43,12 @@ function saveSessionData() {
 
 function getNewestTitleType(){
 	if(isset($_SESSION['newestTitleType'])){
-		echo $_SESSION["newestTitleType"];
+		print($_SESSION["newestTitleType"]);
 	}
 }
 
 function getMovieContent() {
-	$data = $_SESSION['returnData'][0];
+	$data = $_SESSION['newestTitleData'][0];
 	$strData = new stdClass();
 	foreach ($data as $key => $value) {
 		if (is_array($value)) {

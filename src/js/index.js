@@ -120,7 +120,7 @@ $(document).ready(function () {
 			if ($('#add-title-type-select').val() === "movie") {
 				$.ajax({
 					type: "GET",
-					url: "http://mymovieapi.com/?title=" + $('#main-title-name-field').val() + "&type=json&plot=simple&limit=3&lang=en-US&&release=simple",
+					url: "http://mymovieapi.com/?title=" + $('#add-title-name-field').val() + "&type=json&plot=simple&limit=3&lang=en-US&&release=simple",
 					success: function (data) {
 						$.ajax({
 							type: "POST",
