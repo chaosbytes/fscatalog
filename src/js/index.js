@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
 	function checkUserLoggedIn() {
 		var check = 0;
 		$.ajax({
@@ -8,14 +8,14 @@ $(document).ready(function () {
 				action: "checkUserLoggedIn"
 			},
 			url: "./php/php-login/login.php",
-			success: function (data) {
+			success: function(data) {
 				check = data;
 			}
 		});
 		return check;
 	}
 
-	$("#login-btn").click(function () {
+	$("#login-btn").click(function() {
 		$.ajax({
 			url: "../php/php-login/login.php",
 			method: "POST",
@@ -25,7 +25,7 @@ $(document).ready(function () {
 				user_name: $("#login-username-field").val(),
 				user_password: $("#login-password-field").val()
 			},
-			success: function (data) {
+			success: function(data) {
 				if (data == 1) {
 					$('#left-panel').panel("close");
 					$.mobile.changePage("#main-page");
@@ -34,7 +34,7 @@ $(document).ready(function () {
 		});
 	});
 
-	$("#register-btn").click(function () {
+	$("#register-btn").click(function() {
 		$.ajax({
 			url: "../php/php-login/register.php",
 			method: "POST",
@@ -45,13 +45,13 @@ $(document).ready(function () {
 				user_password_new: $("#register-input-password").val(),
 				user_password_repeat: $("#register-input-password-confirm").val()
 			},
-			success: function (data) {
+			success: function(data) {
 				console.log(data);
 			}
 		});
 	});
 
-	$("#logout-btn").click(function () {
+	$("#logout-btn").click(function() {
 		$.ajax({
 			url: "../php/php-login/login.php",
 			method: "POST",
@@ -59,15 +59,15 @@ $(document).ready(function () {
 				action: "logout",
 				logout: true
 			},
-			success: function () {
+			success: function() {
 				$('#navbar-popup-menu').popup('close');
 				$.mobile.changePage("#home-page");
 			}
 		});
 	});
 
-	$("#home-page").on("pageinit", function () {
-		$("#home-page").on("swipeleft swiperight", function (e) {
+	$("#home-page").on("pageinit", function() {
+		$("#home-page").on("swipeleft swiperight", function(e) {
 			if ($.mobile.activePage.jqmData("panel") !== "open") {
 				if (e.type === "swipeleft") {
 					$("#right-panel").panel("open");
@@ -78,33 +78,18 @@ $(document).ready(function () {
 		});
 	});
 
-	$("#main-page").on("pageinit", function () {
-		$('#main-add-title-btn').click(function () {
+	$("#main-page").on("pageinit", function() {
+		$('#main-add-title-btn').click(function() {
 			if ($('#main-title-type-select').val() === "movie") {
-				$.ajax({
-					type: "GET",
-					url: "http://mymovieapi.com/?title=" + $('#main-title-name-field').val() + "&type=json&plot=simple&limit=3&lang=en-US&&release=simple",
-					success: function (data) {
-						$.ajax({
-							type: "POST",
-							data: {
-								action: "saveSessionData",
-								newestTitleType: "movie",
-								newestTitleData: data
-							},
-							url: "./php/functions.php",
-							success: function () {
-								$('#right-panel2').panel("close");
-							},
-							complete: function () {
-								$.mobile.changePage("#add-title-page");
-							}
-						});
-					}
+				$('#right-panel2').panel("close");
+				searchFilms($('#main-title-name-field').val(), {
+					extras: "images",
+					container: $('#content-add-title')
 				});
 			}
+			$.mobile.changePage("#add-title-page");
 		});
-		$("#main-page").on("swipeleft swiperight", function (e) {
+		$("#main-page").on("swipeleft swiperight", function(e) {
 			if ($.mobile.activePage.jqmData("panel") !== "open") {
 				if (e.type === "swipeleft") {
 					$("#right-panel2").panel("open");
@@ -115,33 +100,18 @@ $(document).ready(function () {
 		});
 	});
 
-	$("#add-title-page").on("pageinit", function () {
-		$('#add-add-title-btn').click(function () {
+	$("#add-title-page").on("pageinit", function() {
+		$('#add-add-title-btn').click(function() {
 			if ($('#add-title-type-select').val() === "movie") {
-				$.ajax({
-					type: "GET",
-					url: "http://mymovieapi.com/?title=" + $('#add-title-name-field').val() + "&type=json&plot=simple&limit=3&lang=en-US&&release=simple",
-					success: function (data) {
-						$.ajax({
-							type: "POST",
-							data: {
-								action: "saveSessionData",
-								newestTitleType: "movie",
-								newestTitleData: data
-							},
-							url: "./php/functions.php",
-							success: function () {
-								$('#right-panel3').panel("close");
-							},
-							complete: function () {
-								$('#add-title-page').trigger("create");
-							}
-						});
-					}
+				$('#right-panel3').panel("close");
+				$('#film-search-results').html("");
+				searchFilms($('#add-title-name-field').val(), {
+					extras: "images",
+					container: $('#content-add-title')
 				});
 			}
 		});
-		$("#add-title-page").on("swipeleft swiperight", function (e) {
+		$("#add-title-page").on("swipeleft swiperight", function(e) {
 			if ($.mobile.activePage.jqmData("panel") !== "open") {
 				if (e.type === "swipeleft") {
 					$("#right-panel3").panel("open");
@@ -151,5 +121,4 @@ $(document).ready(function () {
 			}
 		});
 	});
-
 });

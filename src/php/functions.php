@@ -3,17 +3,11 @@ session_name("fscatalog");
 session_start();
 require_once 'connect_to_mysql.php';
 
-if(isset($_POST["action"])){
-	switch($_POST['action']){
-		case "getUserData":
-			getUserData();
-			break;
-		case "saveSessionData":
-			saveSessionData();
-			break;
-		case "getMovieContent":
-			getMovieContent();
-			break;
+if (isset($_POST["action"])) {
+	switch ($_POST['action']) {
+	case "getUserData":
+		getUserData();
+		break;
 	}
 }
 
@@ -33,32 +27,3 @@ function getUserData() {
 		}
 	}
 }
-
-function saveSessionData() {
-	if (isset($_POST['newestTitleData']) && isset($_POST['newestTitleType'])) {
-		$_SESSION['newestTitleType'] = $_POST['newestTitleType'];
-		$_SESSION['newestTitleData'] = json_decode($_POST['newestTitleData'], true);
-	}
-}
-
-function getNewestTitleType(){
-	if(isset($_SESSION['newestTitleType'])){
-		print($_SESSION["newestTitleType"]);
-	}
-}
-
-function getMovieContent() {
-	$data = $_SESSION['newestTitleData'][0];
-	$strData = new stdClass();
-	foreach ($data as $key => $value) {
-		if (is_array($value)) {
-			$strData->$key = implode(", ", $value);
-		} else {
-			$strData->$key = $value;
-		}
-	}
-	$fields = $_POST['fields'];
-	
-	echo $fields;
-}
-?>

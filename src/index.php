@@ -10,7 +10,6 @@ session_start();
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
   <title>FS-Catalog</title>
   <link rel="stylesheet" href="./css/index.css" type="text/css">
   <link rel="stylesheet" href="./css/custom.css" type="text/css">
@@ -136,7 +135,7 @@ session_start();
   </div><!-- end home page -->
 
   <div data-role="page" id="main-page">
-    <!-- start left-panel-logged-in -->
+    <!-- start left-panel2 -->
 
     <div data-role="panel" id="left-panel2" data-theme="j" data-display="overlay" data-dismissible="false" data-position-fixed="true">
       <div id="left-panel-header" data-theme="j" data-role="header" data-position="fixed">
@@ -146,8 +145,8 @@ session_start();
       <div data-role="content" id="left-panel-content">
         <a id="movie-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Movies ()</a> <a id="music-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Music ()</a> <a id="book-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Books ()</a> <a id="game-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Games ()</a>
       </div>
-    </div><!-- end left-panel-logged-in -->
-    <!-- start right-panel-logged-in -->
+    </div><!-- end left-panel2 -->
+    <!-- start right-panel2 -->
 
     <div data-role="panel" id="right-panel2" data-theme="j" data-display="overlay" data-position="right" data-dismissible="false" data-position-fixed="true">
       <div id="right-panel-header" data-theme="j" data-role="header" data-position="fixed">
@@ -177,13 +176,13 @@ session_start();
           </option>
         </select> <a data-role="button" data-mini="true" data-theme="j" id="main-add-title-btn" data-icon="plus" data-iconpos="right">Add Title</a>
       </div><!-- end panel content -->
-    </div><!-- end right-panel-logged-in -->
+    </div><!-- end right-panel2 -->
     <!-- header-logged-in -->
 
     <div id="header-logged-in" data-theme="j" data-role="header" data-position="fixed">
-      <a id="left-btn2" data-role="button" data-theme="j" href="#left-panel-logged-in" data-icon="grid" data-iconpos="notext"></a>
+      <a id="left-btn2" data-role="button" data-theme="j" href="#left-panel2" data-icon="grid" data-iconpos="notext"></a>
 
-      <h4 id="fs-header-text">FS-Catalog™</h4><a id="right-btn2" data-role="button" data-theme="j" href="#right-panel-logged-in" data-icon="star" data-iconpos="notext"></a>
+      <h4 id="fs-header-text">FS-Catalog™</h4><a id="right-btn2" data-role="button" data-theme="j" href="#right-panel2" data-icon="star" data-iconpos="notext"></a>
     </div><!-- end header-logged-in -->
     <!-- content-main -->
 
@@ -231,7 +230,7 @@ session_start();
   </div><!-- end main Page -->
 
   <div data-role="page" id="add-title-page">
-    <!-- start left-panel-logged-in -->
+    <!-- start left-panel3 -->
 
     <div data-role="panel" id="left-panel3" data-theme="j" data-display="overlay" data-dismissible="false" data-position-fixed="true">
       <div id="left-panel-header" data-theme="j" data-role="header" data-position="fixed">
@@ -241,8 +240,8 @@ session_start();
       <div data-role="content" id="left-panel-content">
         <a id="movie-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Movies ()</a> <a id="music-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Music ()</a> <a id="book-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Books ()</a> <a id="game-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Games ()</a>
       </div>
-    </div><!-- end left-panel-logged-in -->
-    <!-- start right-panel-logged-in -->
+    </div><!-- end left3 -->
+    <!-- start right3 -->
 
     <div data-role="panel" id="right-panel3" data-theme="j" data-display="overlay" data-position="right" data-dismissible="false" data-position-fixed="true">
       <div id="right-panel-header" data-theme="j" data-role="header" data-position="fixed">
@@ -272,18 +271,18 @@ session_start();
           </option>
         </select> <a data-role="button" data-mini="true" data-theme="j" id="add-add-title-btn" data-icon="plus" data-iconpos="right">Add Title</a>
       </div><!-- end panel content -->
-    </div><!-- end right-panel-logged-in -->
+    </div><!-- end right3 -->
     <!-- header-logged-in -->
-
+    
     <div id="header-logged-in" data-theme="j" data-role="header" data-position="fixed">
-      <a id="left-btn2" data-role="button" data-theme="j" href="#left-panel-logged-in" data-icon="grid" data-iconpos="notext"></a>
+      <a id="left-btn2" data-role="button" data-theme="j" href="#left-panel3" data-icon="grid" data-iconpos="notext"></a>
 
-      <h4 id="fs-header-text">FS-Catalog™</h4><a id="right-btn2" data-role="button" data-theme="j" href="#right-panel-logged-in" data-icon="star" data-iconpos="notext"></a>
+      <h4 id="fs-header-text">FS-Catalog™</h4><a id="right-btn2" data-role="button" data-theme="j" href="#right-panel3" data-icon="star" data-iconpos="notext"></a>
     </div><!-- end header-logged-in -->
     <!-- content-add-title -->
 
     <div id="content-add-title" data-role="content">
-      <script>document.write(getNewestTitleInfo());</script>
+    	<ul id='film-search-results' data-role='listview'></ul>
     </div><!-- end content-add-title -->
     <!-- footer-logged-in -->
 
