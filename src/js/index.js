@@ -109,6 +109,10 @@ $(document).ready(function() {
 					extras: "images",
 					container: $('#content-add-title')
 				});
+				setTimeout(function() {
+					$('#add-title-page').trigger("create");
+					$('#film-search-results').listview("refresh");
+				}, 1000)
 			}
 		});
 		$("#add-title-page").on("swipeleft swiperight", function(e) {
