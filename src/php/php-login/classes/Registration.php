@@ -24,23 +24,25 @@ class Registration {
 	public      $errors                     = array();                  // collection of error messages
 	public      $messages                   = array();                  // collection of success / neutral messages
 	
-	private			$post_array									= array();
+	private			$post									= array();
+	private			$get									= array();
 
 	/**
 	 * the function "__construct()" automatically starts whenever an object of this class is created,
 	 * you know, when you do "$login = new Login();"
 	 */
-	public function __construct($_post_array) {
-		$this->post_array = $_post_array;
+	public function __construct($_post, $_get) {
+		$this->post = $_post;
+		$this->get = $_get;
 		// if we have such a POST request, call the registerNewUser() method
-		if (isset($this->post_array["register"])) {
+		if (isset($this->post["register"])) {
 
 			$this->registerNewUser();
 
 		}
 
 		// if we have such a GET request, call the verifyNewUser() method
-		if (isset($_GET["email"]) && isset($_GET["verification_code"])) {
+		if (isset($this->get["email"]) && isset($this->get["verification_code"])) {
 
 			$this->verifyNewUser();
 
@@ -54,52 +56,34 @@ class Registration {
 	 * everything is fine
 	 */
 	private function registerNewUser() {
-		if (empty($this->post_array['user_name'])) {
-
+		if (empty($this->post['user_name'])) {
 			$this->errors[] = "Empty Username";
-
-		} elseif (empty($this->post_array['user_password_new']) || empty($this->post_array['user_password_repeat'])) {
-
+		} elseif (empty($this->post['user_password_new']) || empty($this->post['user_password_repeat'])) {
 			$this->errors[] = "Empty Password";
-
-		} elseif ($this->post_array['user_password_new'] !== $this->post_array['user_password_repeat']) {
-
+		} elseif ($this->post['user_password_new'] !== $this->post['user_password_repeat']) {
 			$this->errors[] = "Password and password repeat are not the same";
-
-		} elseif (strlen($this->post_array['user_password_new']) < 6) {
-
+		} elseif (strlen($this->post['user_password_new']) < 6) {
 			$this->errors[] = "Password has a minimum length of 6 characters";
-
-		} elseif (strlen($this->post_array['user_name']) > 64 || strlen($this->post_array['user_name']) < 2) {
-
+		} elseif (strlen($this->post['user_name']) > 64 || strlen($this->post['user_name']) < 2) {
 			$this->errors[] = "Username cannot be shorter than 2 or longer than 64 characters";
-
-		} elseif (!preg_match('/^[a-z\d]{2,64}$/i', $this->post_array['user_name'])) {
-
+		} elseif (!preg_match('/^[a-z\d]{2,64}$/i', $this->post['user_name'])) {
 			$this->errors[] = "Username does not fit the name sheme: only a-Z and numbers are allowed, 2 to 64 characters";
-
-		} elseif (empty($this->post_array['user_email'])) {
-
+		} elseif (empty($this->post['user_email'])) {
 			$this->errors[] = "Email cannot be empty";
-
-		} elseif (strlen($this->post_array['user_email']) > 64) {
-
+		} elseif (strlen($this->post['user_email']) > 64) {
 			$this->errors[] = "Email cannot be longer than 64 characters";
-
-		} elseif (!filter_var($this->post_array['user_email'], FILTER_VALIDATE_EMAIL)) {
-
+		} elseif (!filter_var($this->post['user_email'], FILTER_VALIDATE_EMAIL)) {
 			$this->errors[] = "Your email address is not in a valid email format";
-
-		} elseif (!empty($this->post_array['user_name'])
-			&& strlen($this->post_array['user_name']) <= 64
-			&& strlen($this->post_array['user_name']) >= 2
-			&& preg_match('/^[a-z\d]{2,64}$/i', $this->post_array['user_name'])
-			&& !empty($this->post_array['user_email'])
-			&& strlen($this->post_array['user_email']) <= 64
-			&& filter_var($this->post_array['user_email'], FILTER_VALIDATE_EMAIL)
-			&& !empty($this->post_array['user_password_new'])
-			&& !empty($this->post_array['user_password_repeat'])
-			&& ($this->post_array['user_password_new'] === $this->post_array['user_password_repeat'])) {
+		} elseif (!empty($this->post['user_name'])
+			&& strlen($this->post['user_name']) <= 64
+			&& strlen($this->post['user_name']) >= 2
+			&& preg_match('/^[a-z\d]{2,64}$/i', $this->post['user_name'])
+			&& !empty($this->post['user_email'])
+			&& strlen($this->post['user_email']) <= 64
+			&& filter_var($this->post['user_email'], FILTER_VALIDATE_EMAIL)
+			&& !empty($this->post['user_password_new'])
+			&& !empty($this->post['user_password_repeat'])
+			&& ($this->post['user_password_new'] === $this->post['user_password_repeat'])) {
 
 			// TODO: the above check is redundant, but from a developer's perspective it makes clear
 			// what exactly we want to reach to go into this if-block
@@ -111,11 +95,11 @@ class Registration {
 			if (!$this->db_connection->connect_errno) {
 
 				// escapin' this, additionally removing everything that could be (html/javascript-) code
-				$this->user_name            = $this->db_connection->real_escape_string(htmlentities($this->post_array['user_name'], ENT_QUOTES));
-				$this->user_email           = $this->db_connection->real_escape_string(htmlentities($this->post_array['user_email'], ENT_QUOTES));
+				$this->user_name            = $this->db_connection->real_escape_string(htmlentities($this->post['user_name'], ENT_QUOTES));
+				$this->user_email           = $this->db_connection->real_escape_string(htmlentities($this->post['user_email'], ENT_QUOTES));
 
 				// no need to escape as this is only used in the hash function
-				$this->user_password = $this->post_array['user_password_new'];
+				$this->user_password = $this->post['user_password_new'];
 
 				// now it gets a little bit crazy: check if we have a constant HASH_COST_FACTOR defined (in config/hashing.php),
 				// if so: put the value into $this->hash_cost_factor, if not, make $this->hash_cost_factor = null
@@ -229,8 +213,8 @@ class Registration {
 		// if no connection errors (= working database connection)
 		if (!$this->db_connection->connect_errno) {
 
-			$this->user_email           = $this->db_connection->real_escape_string($_GET['email']);
-			$this->user_activation_hash = $this->db_connection->real_escape_string($_GET['verification_code']);
+			$this->user_email           = $this->db_connection->real_escape_string($this->get['email']);
+			$this->user_activation_hash = $this->db_connection->real_escape_string($this->get['verification_code']);
 
 			//
 			$this->db_connection->query('UPDATE users SET user_active = 1, user_activation_hash = NULL WHERE user_email = "'.$this->user_email.'" AND user_activation_hash = "'.$this->user_activation_hash.'";');

@@ -76,7 +76,7 @@ session_start();
         </div>
 
         <div data-role="fieldcontain" class="register-submit-button">
-          <input id="register-submit" name="register" value="Register" type="submit" data-mini="true">
+          <input id="register-btn" name="register" value="Register" type="submit" data-mini="true">
         </div>
       </div>
     </div><!-- end right-panel -->
@@ -139,11 +139,11 @@ session_start();
 
     <div data-role="panel" id="left-panel2" data-theme="j" data-display="overlay" data-dismissible="false" data-position-fixed="true">
       <div id="left-panel-header" data-theme="j" data-role="header" data-position="fixed">
-        <div id="left-panel-header-text" class="ui-title"></div><a id="left-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
+        <div id="left-panel-header-text" class="ui-title"><?php echo $_SESSION['user_name']?></div><a id="left-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
       </div>
 
       <div data-role="content" id="left-panel-content">
-        <a id="movie-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Movies ()</a> <a id="music-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Music ()</a> <a id="book-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Books ()</a> <a id="game-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Games ()</a>
+        <a id="movie-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Movies (<?php echo $_SESSION['movie_count']?>)</a> <a id="music-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Music (<?php echo $_SESSION['music_count']?>)</a> <a id="book-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Books (<?php echo $_SESSION['book_count']?>)</a> <a id="game-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Games (<?php echo $_SESSION['game_count']?>)</a>
       </div>
     </div><!-- end left-panel2 -->
     <!-- start right-panel2 -->
@@ -234,11 +234,11 @@ session_start();
 
     <div data-role="panel" id="left-panel3" data-theme="j" data-display="overlay" data-dismissible="false" data-position-fixed="true">
       <div id="left-panel-header" data-theme="j" data-role="header" data-position="fixed">
-        <div id="left-panel-header-text" class="ui-title"></div><a id="left-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
+        <div id="left-panel-header-text" class="ui-title"><?php echo $_SESSION['user_name']?></div><a id="left-panel-close-btn" data-role="button" data-theme="j" data-rel="close" data-icon="delete" data-iconpos="notext" class="ui-btn-right"></a>
       </div>
 
       <div data-role="content" id="left-panel-content">
-        <a id="movie-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Movies ()</a> <a id="music-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Music ()</a> <a id="book-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Books ()</a> <a id="game-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Games ()</a>
+        <a id="movie-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Movies (<?php echo $_SESSION['movie_count']?>)</a> <a id="music-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Music (<?php echo $_SESSION['music_count']?>)</a> <a id="book-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Books (<?php echo $_SESSION['book_count']?>)</a> <a id="game-btn" data-role="button" data-theme="j" data-icon="arrow-r" data-iconpos="right" data-mini="true">My Games (<?php echo $_SESSION['game_count']?>)</a>
       </div>
     </div><!-- end left3 -->
     <!-- start right3 -->

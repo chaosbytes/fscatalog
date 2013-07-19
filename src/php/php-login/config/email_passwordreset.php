@@ -9,8 +9,8 @@
  */
 
 /** absolute URL to register.php, necessary for email password reset links */
-define("EMAIL_PASSWORDRESET_URL", "http://fscatalog.foursquaregames.com/php/password_reset.php");
+define("EMAIL_PASSWORDRESET_URL", "http://fscatalog.foursquaregames.com/php/php-login/password_reset.php");
 
-define("EMAIL_PASSWORDRESET_FROM", "noreply@efscatalog.foursquaregames.com");
+define("EMAIL_PASSWORDRESET_FROM", "noreply@fscatalog.foursquaregames.com");
 define("EMAIL_PASSWORDRESET_SUBJECT", "Password reset for Foursquare Catalog");
 define("EMAIL_PASSWORDRESET_CONTENT", "Please click on this link to reset your password:");

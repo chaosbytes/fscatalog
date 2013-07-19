@@ -9,7 +9,7 @@
  */
 
 /** absolute URL to register.php, necessary for email verification links */
-define("EMAIL_VERIFICATION_URL", "http://fscatalog.foursquaregames.com/php/register.php");
+define("EMAIL_VERIFICATION_URL", "http://fscatalog.foursquaregames.com/php/php-login/register.php");
 
 define("EMAIL_VERIFICATION_FROM", "noreply@fscatalog.foursquaregames.com");
 define("EMAIL_VERIFICATION_SUBJECT", "Account Activation for Foursquare Catalog");

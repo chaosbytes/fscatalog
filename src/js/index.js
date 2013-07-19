@@ -14,7 +14,6 @@ $(document).ready(function() {
 		});
 		return check;
 	}
-
 	$("#login-btn").click(function() {
 		$.ajax({
 			url: "../php/php-login/login.php",
@@ -33,7 +32,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-
 	$("#register-btn").click(function() {
 		$.ajax({
 			url: "../php/php-login/register.php",
@@ -50,7 +48,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-
 	$("#logout-btn").click(function() {
 		$.ajax({
 			url: "../php/php-login/login.php",
@@ -65,7 +62,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-
 	$("#home-page").on("pageinit", function() {
 		$("#home-page").on("swipeleft swiperight", function(e) {
 			if ($.mobile.activePage.jqmData("panel") !== "open") {
@@ -77,17 +73,13 @@ $(document).ready(function() {
 			}
 		});
 	});
-
 	$("#main-page").on("pageinit", function() {
 		$('#main-add-title-btn').click(function() {
 			if ($('#main-title-type-select').val() === "movie") {
 				$('#right-panel2').panel("close");
-				searchFilms($('#main-title-name-field').val(), {
-					extras: "images",
-					container: $('#content-add-title')
-				});
+				$.mobile.changePage("#add-title-page");
+				searchFilms($('#main-title-name-field').val());
 			}
-			$.mobile.changePage("#add-title-page");
 		});
 		$("#main-page").on("swipeleft swiperight", function(e) {
 			if ($.mobile.activePage.jqmData("panel") !== "open") {
@@ -99,20 +91,12 @@ $(document).ready(function() {
 			}
 		});
 	});
-
 	$("#add-title-page").on("pageinit", function() {
 		$('#add-add-title-btn').click(function() {
 			if ($('#add-title-type-select').val() === "movie") {
 				$('#right-panel3').panel("close");
 				$('#film-search-results').html("");
-				searchFilms($('#add-title-name-field').val(), {
-					extras: "images",
-					container: $('#content-add-title')
-				});
-				setTimeout(function() {
-					$('#add-title-page').trigger("create");
-					$('#film-search-results').listview("refresh");
-				}, 1000)
+				searchFilms($('#add-title-name-field').val());
 			}
 		});
 		$("#add-title-page").on("swipeleft swiperight", function(e) {

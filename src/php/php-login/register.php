@@ -35,7 +35,7 @@ require_once("classes/Registration.php");
 
 // create the registration object. when this object is created, it will do all registration stuff automatically
 // so this single line handles the entire registration process.
-$registration = new Registration($_POST);
+$registration = new Registration($_POST, $_GET);
 
 // show negative messages
 if ($registration->errors) {

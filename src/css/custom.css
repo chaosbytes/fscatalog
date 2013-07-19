@@ -1,217 +1,243 @@
-body, div{
-	background-color: #373737;
+body,div {
+	background-color:#373737;
 }
 
-@font-face{
-	font-family: 'minecraftia';
-	src: url('../fonts/Minecraftia.ttf');
+@font-face {
+	font-family:'minecraftia';
+	src:url(../fonts/Minecraftia.ttf);
 }
+
 * {
-	font-family: minecraftia;
-	font-size: small;
-	color: #18AAD6;
-	text-align: center;
+	font-family:minecraftia;
+	font-size:small;
+	color:#18AAD6;
+	text-align:center;
 }
 
 ::-webkit-input-placeholder {
-  font-size: xx-small;
-  text-align: center;
+	font-size:xx-small;
+	text-align:center;
 }
 
 ::-moz-placeholder {
-  font-size: xx-small;
-  text-align: center;
+	font-size:xx-small;
+	text-align:center;
 }
 
 ::-o-placeholder {
-  font-size: xx-small;
-  text-align: center;
+	font-size:xx-small;
+	text-align:center;
 }
 
 ::-ms-placeholder {
-  font-size: xx-small;
-  text-align: center;
+	font-size:xx-small;
+	text-align:center;
 }
 
 -placeholder {
-  font-size: xx-small;
-  text-align: center;
+	font-size:xx-small;
+	text-align:center;
 }
 
 div.spacer {
-	height: 25px;
+	height:25px;
 }
 
 .ui-grid-a .icon-tile.ui-block-a {
-	width: 125px;
-	height: 125px;
-	position: relative;
-	background-color: #373737;
-	margin: auto;
+	width:125px;
+	height:125px;
+	position:relative;
+	background-color:#373737;
+	margin:auto;
 }
 
 .ui-grid-a .icon-tile.ui-block-b {
-	width: 125px;
-	height: 125px;
-	position: relative;
-	background-color: #373737;
-	margin: auto;
+	width:125px;
+	height:125px;
+	position:relative;
+	background-color:#373737;
+	margin:auto;
 }
 
 #fs-header.ui-title {
-	font-size: 14px;
+	font-size:14px;
 }
 
-#icons-wrapper {	
-	width: 250px;
-	height: 250px;
-	margin: auto;
+#icons-wrapper {
+	width:250px;
+	height:250px;
+	margin:auto;
 }
 
 #movie-icon-tile {
-	width: 100px;
-	height: 100px;
-	margin: 12.5px 0px 0px 12.5px;
-	position: relative;
+	width:100px;
+	height:100px;
+	margin:12.5px 0 0 12.5px;
+	position:relative;
 }
 
 #music-icon-tile {
-	width: 100px;
-	height: 100px;
-	margin: 12.5px 0px 0px 12.5px;
-	position: relative;
+	width:100px;
+	height:100px;
+	margin:12.5px 0 0 12.5px;
+	position:relative;
 }
 
 #book-icon-tile {
-	width: 100px;
-	height: 100px;
-	margin: 12.5px 0px 0px 12.5px;
-	position: relative;
+	width:100px;
+	height:100px;
+	margin:12.5px 0 0 12.5px;
+	position:relative;
 }
 
 #game-icon-tile {
-	width: 100px;
-	height: 100px;
-	margin: 12.5px 0px 0px 12.5px;
-	position: relative;
+	width:100px;
+	height:100px;
+	margin:12.5px 0 0 12.5px;
+	position:relative;
 }
 
 #welcome-message {
-	color: white;
-	text-align: center;
-	font-size: small;
-	display: block;
-  width:100%;
-  height: 100%;
-  margin: 0 auto;
+	color:#fff;
+	text-align:center;
+	font-size:small;
+	display:block;
+	width:100%;
+	height:100%;
+	margin:0 auto;
 }
 
 #login-message {
-	color: white;
-	text-align: center;
-	font-size: 10px;
+	color:#fff;
+	text-align:center;
+	font-size:10px;
 	display:block;
-  width:100%;
-  height: 100%;
-  margin: 0 auto;
+	width:100%;
+	height:100%;
+	margin:0 auto;
 }
 
 #navbar {
-	width: 100%;
-	height: 40px;
-	position: relative;
-	margin: auto;
+	width:100%;
+	height:40px;
+	position:relative;
+	margin:auto;
 }
 
 h3#fs-footer-dev {
-	color: white;
-	text-align: center;
-	font-size: 10px;
+	color:#fff;
+	text-align:center;
+	font-size:10px;
 	display:block;
-  width:100%;
-  height: 100%;
-  margin: 0 auto;
+	width:100%;
+	height:100%;
+	margin:0 auto;
 }
 
 h5#fs-footer-copyright {
-	color: white;
-	text-align: center;
-	font-size: 6px;
+	color:#fff;
+	text-align:center;
+	font-size:6px;
 	display:block;
-  width:100%;
-  height: 100%;
-  margin: 0 auto;
+	width:100%;
+	height:100%;
+	margin:0 auto;
 }
 
 #navbar-popup-menu-popup {
-	margin-bottom: 50px;
+	margin-bottom:50px;
 }
 
 #navbar-popup-menu {
-	width: 100%;
-	height: 100%;
+	width:100%;
+	height:100%;
 }
 
 #left-panel-content {
-	margin-top: 40px;
+	margin-top:40px;
 }
 
-#login-btn{
-	width: 126px;
+#login-btn {
+	width:126px;
+	margin: auto;
 }
 
 #left-panel-header.ui-header {
-	height: 44px;
+	height:44px;
 }
 
 #left-panel-header-text.ui-title {
-	font-size: x-small;
-	width: 100px;
-	height: 20px;
-	margin: auto;
-	margin-top: 10px;
-	background-color: rgba(0, 0, 0, 0);
+	font-size:x-small;
+	width:100px;
+	height:20px;
+	margin:auto;
+	margin-top:10px;
+	background-color:rgba(0,0,0,0);
 }
 
-a#movie-btn span.ui-btn-text{
-	font-size: 10px;
+a#movie-btn span.ui-btn-text {
+	font-size:10px;
 }
 
-a#music-btn span.ui-btn-text{
-	font-size: 10px;
+a#music-btn span.ui-btn-text {
+	font-size:10px;
 }
 
-a#book-btn span.ui-btn-text{
-	font-size: 10px;
+a#book-btn span.ui-btn-text {
+	font-size:10px;
 }
 
-a#game-btn span.ui-btn-text{
-	font-size: 10px;
+a#game-btn span.ui-btn-text {
+	font-size:10px;
 }
+
 #right-panel-header.ui-header {
-	height: 44px;
+	height:44px;
 }
+
 #right-panel-header-text.ui-title {
-	font-size: x-small;
-	width: 100px;
-	height: 20px;
-	margin: auto;
-	margin-top: 10px;
-	background-color: rgba(0, 0, 0, 0);
+	font-size:x-small;
+	width:100px;
+	height:20px;
+	margin:auto;
+	margin-top:10px;
+	background-color:rgba(0,0,0,0);
 }
+
 input#title-name-field {
-	width: 160px;
+	width:160px;
 }
 
-input#title-name-field -placeholder, ::-webkit-input-placeholder{
-	padding-right: 15px;
+input#title-name-field -placeholder,::-webkit-input-placeholder {
+	padding-right:15px;
 }
-
 
 #title-type-select {
-	width: 160px;
+	width:160px;
 }
 
 div #title-type-select-button span.ui-btn-inner span.ui-btn-text span {
-	padding-left: 15px;
+	padding-left:15px;
+}
+
+#film-search-results {
+	width: 75%;
+	margin-left: 12.5%;
+	
+}
+
+h3.film-search-result-heading {
+	font-size: small;
+	text-align: left;
+}
+
+p.film-search-result-tagline {
+	font-size: x-small;
+	text-align: left;
+}
+
+p.film-search-result-overview {
+	font-size: xx-small;
+	text-align: left;
+	word-wrap: break-word;
 }

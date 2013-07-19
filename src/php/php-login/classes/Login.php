@@ -28,17 +28,21 @@ class Login {
 	public      $errors                        = array();               // collection of error messages
 	public      $messages                      = array();               // collection of success / neutral messages
 
-	private     $data_array           				 = array();
+	private     $post               = array();
 	/**
 	 * the function "__construct()" automatically starts whenever an object of this class is created,
 	 * you know, when you do "$login = new Login();"
 	 */
-	public function __construct($_data_array) {
-		$this->data_array = $_data_array;
+	public function __construct($_post) {
+	
 		// create/read session
 		session_name("fscatalog");
 		session_set_cookie_params(7*24*60*60);
 		session_start();
+	
+	
+		$this->post = $_post;
+		
 
 		// check the possible login actions:
 		// 1. logout (happen when user clicks logout button)
@@ -47,7 +51,7 @@ class Login {
 		//    logged-in-status is written into his session data on the server. this is the typical behaviour of common login scripts.
 
 		// if user tried to log out
-		if (isset($this->data_array["logout"])) {
+		if (isset($this->post["logout"])) {
 
 			$this->doLogout();
 
@@ -58,29 +62,29 @@ class Login {
 			$this->loginWithSessionData();
 
 			// checking for form submit from editing screen
-			if (isset($this->data_array["user_edit_submit_name"])) {
+			if (isset($this->post["user_edit_submit_name"])) {
 
 				$this->editUserName();
 
-			} elseif (isset($this->data_array["user_edit_submit_email"])) {
+			} elseif (isset($this->post["user_edit_submit_email"])) {
 
 				$this->editUserEmail();
 
-			} elseif (isset($this->data_array["user_edit_submit_password"])) {
+			} elseif (isset($this->post["user_edit_submit_password"])) {
 
 				$this->editUserPassword();
 
 			}
 
 			// if user just submitted a login form
-		} elseif (isset($this->data_array["login"])) {
+		} elseif (isset($this->post["login"])) {
 
 			$this->loginWithPostData();
 
 		}
 
 		// checking if user requested a password reset mail
-		if (isset($this->data_array["request_password_reset"])) {
+		if (isset($this->post["request_password_reset"])) {
 
 			$this->setPasswordResetDatabaseTokenAndSendMail(); // maybe a little bit cheesy
 
@@ -88,7 +92,7 @@ class Login {
 
 			$this->checkIfEmailVerificationCodeIsValid();
 
-		} elseif (isset($this->data_array["submit_new_password"])) {
+		} elseif (isset($this->post["submit_new_password"])) {
 
 			$this->editNewPassword();
 
@@ -105,7 +109,6 @@ class Login {
 
 
 	private function loginWithSessionData() {
-
 		// set logged in status to true, because we just checked for this:
 		// !empty($_SESSION['user_name']) && ($_SESSION['user_logged_in'] == 1)
 		// when we called this method (in the constructor)
@@ -113,9 +116,9 @@ class Login {
 	}
 
 
-	private function loginWithPostData() {
+	private function loginWithPostData() {		
 		// if POST data (from login form) contains non-empty user_name and non-empty user_password
-		if (!empty($this->data_array['user_name']) && !empty($this->data_array['user_password'])) {
+		if (!empty($this->post['user_name']) && !empty($this->post['user_password'])) {
 
 			// create a database connection, using the constants from config/db.php (which we loaded in index.php)
 			$this->db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -123,7 +126,7 @@ class Login {
 			// if no connection errors (= working database connection)
 			if (!$this->db_connection->connect_errno) {
 				// escape the POST stuff
-				$this->user_name = $this->db_connection->real_escape_string($this->data_array['user_name']);
+				$this->user_name = $this->db_connection->real_escape_string($this->post['user_name']);
 				// database query, getting all the info of the selected user
 				$checklogin = $this->db_connection->query("SELECT * FROM users WHERE user_name = '".$this->user_name."';");
 
@@ -133,19 +136,27 @@ class Login {
 					$result_row = $checklogin->fetch_object();
 
 					// using PHP 5.5's password_verify() function to check if the provided passwords fits to the hash of that user's password
-					if (password_verify($this->data_array['user_password'], $result_row->user_password_hash)) {
+					if (password_verify($this->post['user_password'], $result_row->user_password_hash)) {
 						if ($result_row->user_active == 1) {
 							// write user data into PHP SESSION [a file on your server]
 							$_SESSION['user_id'] = $result_row->user_id;
 							$_SESSION['user_name'] = $result_row->user_name;
 							$_SESSION['user_email'] = $result_row->user_email;
 							$_SESSION['user_logged_in'] = 1;
+							$_SESSION['movie_count'] = $result_row->movie_count;
+							$_SESSION['music_count'] = $result_row->music_count;
+							$_SESSION['book_count'] = $result_row->book_count;
+							$_SESSION['game_count'] = $result_row->game_count;
 							// declare user id, set the login status to true
 							$this->user_id = $result_row->user_id;
 							$this->user_is_logged_in = true;
 
-							// TO CLARIFY: in future versions of the script: should we rehash every hash with standard cost factor
-							// when the HASH_COST_FACTOR in config/hashing.php is commented out ?
+							//setup request APIs for movies, music, books, and games
+							
+							//TMDb - Movies API
+							require_once('../TMDb.php');
+							require_once('../tmdb_config.php');
+							$_SESSION['tmdb_config'] = new TMDb(APIKEY, 'en', TRUE);
 
 						} else {
 
@@ -169,11 +180,11 @@ class Login {
 				$this->errors[] = "Database connection problem.";
 			}
 
-		} elseif (empty($this->data_array['user_name'])) {
+		} elseif (empty($this->post['user_name'])) {
 
 			$this->errors[] = "Username field was empty.";
 
-		} elseif (empty($this->data_array['user_password'])) {
+		} elseif (empty($this->post['user_password'])) {
 
 			$this->errors[] = "Password field was empty.";
 		}
@@ -184,12 +195,11 @@ class Login {
 	 * perform the logout
 	 */
 	public function doLogout() {
-
+		session_start();
 		$_SESSION = array();
 		session_destroy();
 		$this->user_is_logged_in = false;
 		$this->messages[] = "You have been logged out.";
-
 	}
 
 	/**
@@ -208,14 +218,14 @@ class Login {
 	public function editUserName() {
 
 
-		if (!empty($this->data_array['user_name']) && $this->data_array['user_name'] == $_SESSION["user_name"]) {
+		if (!empty($this->post['user_name']) && $this->post['user_name'] == $_SESSION["user_name"]) {
 
 			$this->errors[] = "Sorry, that username is the same as your current one. Please choose another one.";
 
 		}
 		// username cannot be empty and must be azAZ09 and 2-64 characters
 		// TODO: maybe this pattern should also be implemented in Registration.php (or other way round)
-		elseif (!empty($this->data_array['user_name']) && preg_match("/^(?=.{2,64}$)[a-zA-Z][a-zA-Z0-9]*(?: [a-zA-Z0-9]+)*$/", $this->data_array['user_name'])) {
+		elseif (!empty($this->post['user_name']) && preg_match("/^(?=.{2,64}$)[a-zA-Z][a-zA-Z0-9]*(?: [a-zA-Z0-9]+)*$/", $this->post['user_name'])) {
 
 			// creating a database connection
 			$this->db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -224,7 +234,7 @@ class Login {
 			if (!$this->db_connection->connect_errno) {
 
 				// escapin' this
-				$this->user_name = $this->db_connection->real_escape_string(htmlentities($this->data_array['user_name'], ENT_QUOTES));
+				$this->user_name = $this->db_connection->real_escape_string(htmlentities($this->post['user_name'], ENT_QUOTES));
 				$this->user_name = substr($this->user_name, 0, 64); // TODO: is this really necessary ?
 				$this->user_id = $this->db_connection->real_escape_string($_SESSION['user_id']); // TODO: is this really necessary ?
 
@@ -273,13 +283,13 @@ class Login {
 	public function editUserEmail() {
 
 
-		if (!empty($this->data_array['user_email']) && $this->data_array['user_email'] == $_SESSION["user_email"]) {
+		if (!empty($this->post['user_email']) && $this->post['user_email'] == $_SESSION["user_email"]) {
 
 			$this->errors[] = "Sorry, that email address is the same as your current one. Please choose another one.";
 
 		}
 		// user mail cannot be empty and must be in email format
-		elseif (!empty($this->data_array['user_email']) && filter_var($this->data_array['user_email'], FILTER_VALIDATE_EMAIL)) {
+		elseif (!empty($this->post['user_email']) && filter_var($this->post['user_email'], FILTER_VALIDATE_EMAIL)) {
 
 
 			// creating a database connection
@@ -289,7 +299,7 @@ class Login {
 			if (!$this->db_connection->connect_errno) {
 
 				// escapin' this
-				$this->user_email = $this->db_connection->real_escape_string(htmlentities($this->data_array['user_email'], ENT_QUOTES));
+				$this->user_email = $this->db_connection->real_escape_string(htmlentities($this->post['user_email'], ENT_QUOTES));
 				// prevent database flooding
 				$this->user_email = substr($this->user_email, 0, 64);
 				// not really necessary, but just in case...
@@ -328,22 +338,22 @@ class Login {
 	 */
 	public function editUserPassword() {
 
-		if (empty($this->data_array['user_password_new']) || empty($this->data_array['user_password_repeat']) || empty($this->data_array['user_password_old'])) {
+		if (empty($this->post['user_password_new']) || empty($this->post['user_password_repeat']) || empty($this->post['user_password_old'])) {
 
 			$this->errors[] = "Empty Password";
 
-		} elseif ($this->data_array['user_password_new'] !== $this->data_array['user_password_repeat']) {
+		} elseif ($this->post['user_password_new'] !== $this->post['user_password_repeat']) {
 
 			$this->errors[] = "Password and password repeat are not the same";
 
-		} elseif (strlen($this->data_array['user_password_new']) < 6) {
+		} elseif (strlen($this->post['user_password_new']) < 6) {
 
 			$this->errors[] = "Password has a minimum length of 6 characters";
 
-		} else if (!empty($this->data_array['user_password_old'])
-				&& !empty($this->data_array['user_password_new'])
-				&& !empty($this->data_array['user_password_repeat'])
-				&& ($this->data_array['user_password_new'] === $this->data_array['user_password_repeat'])) {
+		} else if (!empty($this->post['user_password_old'])
+				&& !empty($this->post['user_password_new'])
+				&& !empty($this->post['user_password_repeat'])
+				&& ($this->post['user_password_new'] === $this->post['user_password_repeat'])) {
 
 				// creating a database connection
 				$this->db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -361,7 +371,7 @@ class Login {
 						$result_row = $check_for_right_password->fetch_object();
 
 						// using PHP 5.5's password_verify() function to check if the provided passwords fits to the hash of that user's password
-						if (password_verify($this->data_array['user_password_old'], $result_row->user_password_hash)) {
+						if (password_verify($this->post['user_password_old'], $result_row->user_password_hash)) {
 
 							// now it gets a little bit crazy: check if we have a constant HASH_COST_FACTOR defined (in config/hashing.php),
 							// if so: put the value into $this->hash_cost_factor, if not, make $this->hash_cost_factor = null
@@ -371,7 +381,7 @@ class Login {
 							// the PASSWORD_DEFAULT constant is defined by the PHP 5.5, or if you are using PHP 5.3/5.4, by the password hashing
 							// compatibility library. the third parameter looks a little bit shitty, but that's how those PHP 5.5 functions
 							// want the parameter: as an array with, currently only used with 'cost' => XX.
-							$this->user_password_hash = password_hash($this->data_array['user_password_new'], PASSWORD_DEFAULT, array('cost' => $this->hash_cost_factor));
+							$this->user_password_hash = password_hash($this->post['user_password_new'], PASSWORD_DEFAULT, array('cost' => $this->hash_cost_factor));
 
 							// write users new hash into database
 							$this->db_connection->query("UPDATE users SET user_password_hash = '$this->user_password_hash' WHERE user_id = '".$_SESSION['user_id']."';");
@@ -427,7 +437,7 @@ class Login {
 	 */
 	public function setPasswordResetDatabaseToken() {
 
-		if (empty($this->data_array['user_name'])) {
+		if (empty($this->post['user_name'])) {
 
 			$this->errors[] = "Empty username";
 
@@ -447,7 +457,7 @@ class Login {
 			if (!$this->db_connection->connect_errno) {
 
 				// TODO: this is not totally clean, as this is just the form provided username
-				$this->user_name = $this->db_connection->real_escape_string(htmlentities($this->data_array['user_name'], ENT_QUOTES));
+				$this->user_name = $this->db_connection->real_escape_string(htmlentities($this->post['user_name'], ENT_QUOTES));
 				$query_get_user_data = $this->db_connection->query("SELECT user_id, user_email FROM users WHERE user_name = '".$this->user_name."';");
 
 				// if this user exists
@@ -593,14 +603,14 @@ class Login {
 
 		// TODO: timestamp!
 
-		if (!empty($this->data_array['user_name'])
-			&& !empty($this->data_array['user_password_reset_hash'])
-			&& !empty($this->data_array['user_password_new'])
-			&& !empty($this->data_array['user_password_repeat'])) {
+		if (!empty($this->post['user_name'])
+			&& !empty($this->post['user_password_reset_hash'])
+			&& !empty($this->post['user_password_new'])
+			&& !empty($this->post['user_password_repeat'])) {
 
-			if ($this->data_array['user_password_new'] === $this->data_array['user_password_repeat']) {
+			if ($this->post['user_password_new'] === $this->post['user_password_repeat']) {
 
-				if ($this->data_array['user_password_new'] >= 6) {
+				if ($this->post['user_password_new'] >= 6) {
 
 					// creating a database connection
 					$this->db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -609,11 +619,11 @@ class Login {
 					if (!$this->db_connection->connect_errno) {
 
 						// escapin' this, additionally removing everything that could be (html/javascript-) code
-						$this->user_name                = $this->db_connection->real_escape_string(htmlentities($this->data_array['user_name'], ENT_QUOTES));
-						$this->user_password_reset_hash = $this->db_connection->real_escape_string(htmlentities($this->data_array['user_password_reset_hash'], ENT_QUOTES));
+						$this->user_name                = $this->db_connection->real_escape_string(htmlentities($this->post['user_name'], ENT_QUOTES));
+						$this->user_password_reset_hash = $this->db_connection->real_escape_string(htmlentities($this->post['user_password_reset_hash'], ENT_QUOTES));
 
 						// no need to escape as this is only used in the hash function
-						$this->user_password = $this->data_array['user_password_new'];
+						$this->user_password = $this->post['user_password_new'];
 
 						// now it gets a little bit crazy: check if we have a constant HASH_COST_FACTOR defined (in config/hashing.php),
 						// if so: put the value into $this->hash_cost_factor, if not, make $this->hash_cost_factor = null
